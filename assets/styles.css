@@ -256,3 +256,43 @@ code {
     transition:none;
   }
 }
+
+.page-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+}
+.tool-header {
+  margin-bottom:26px;
+}
+.tool-header .back {
+  margin-bottom:0;
+}
+.language-switch {
+  display:inline-flex;
+  flex-shrink:0;
+  gap:3px;
+  padding:3px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--card);
+}
+.language-switch button {
+  border:0;
+  border-radius:5px;
+  padding:6px 9px;
+  background:transparent;
+  color:var(--muted);
+  font:600 11px system-ui,sans-serif;
+  cursor:pointer;
+}
+.language-switch button[aria-pressed="true"] {
+  background:var(--text);
+  color:var(--bg);
+}
+@media(max-width:380px) {
+  .page-header h1 { font-size:1.55rem; }
+  .page-header { gap:10px; }
+  .language-switch button { padding:6px 7px; }
+}

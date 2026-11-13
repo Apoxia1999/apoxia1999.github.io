@@ -24,9 +24,9 @@ if (button && status && window.isSecureContext && navigator.clipboard?.writeText
         throw new Error('Unexpected installer format');
       }
       await navigator.clipboard.writeText(text.trim());
-      status.textContent = 'Copiado. Pégalo en Windows → Python Shell de Houdini y pulsa Enter.';
+      window.ApoxiaI18n.setMessage(status, 'copySuccess');
     } catch {
-      status.textContent = 'No se pudo copiar. Usa «Instalación manual» para descargarlo.';
+      window.ApoxiaI18n.setMessage(status, 'copyError');
     } finally {
       button.disabled = false;
     }

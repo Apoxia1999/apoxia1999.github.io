@@ -3,39 +3,46 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Houdini Node Copypaster v2.1. Copia nodos y animación entre equipos por Parsec.">
+  <meta name="description" content="Houdini Node Copypaster v2.1. Copia nodos y animación entre equipos por Parsec." data-i18n-content="toolDescription">
   <title>Houdini Node Copypaster — Apoxia Toolkit</title>
   <link rel="canonical" href="https://apoxia1999.github.io/houdini-node-copypaster/">
-  <link rel="stylesheet" href="../assets/styles.css">
-  <script src="../assets/tool.js" defer></script>
+  <link rel="stylesheet" href="../assets/styles.css?v=i18n">
+  <script src="../assets/i18n.js" defer></script>
+  <script src="../assets/tool.js?v=i18n" defer></script>
 </head>
 <body>
   <main class="tool-page">
-    <a class="back" href="../">← Apoxia Toolkit</a>
-    <img class="tool-cover" src="../assets/houdini-node.svg" alt="Nodo de Houdini Node Copypaster" width="640" height="340">
+    <header class="page-header tool-header">
+      <a class="back" href="../">← Apoxia Toolkit</a>
+      <div class="language-switch" role="group" aria-label="Idioma" data-i18n-aria-label="language" hidden>
+        <button type="button" data-language="es" lang="es" aria-label="Español" aria-pressed="true">ES</button>
+        <button type="button" data-language="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+      </div>
+    </header>
+    <img class="tool-cover" src="../assets/houdini-node.svg" alt="Nodo de Houdini Node Copypaster" data-i18n-alt="nodeAlt" width="640" height="340">
     <span class="version">v2.1 · Linux / Windows</span>
     <h1>Houdini Node Copypaster</h1>
-    <p class="subtitle">Copia nodos, parámetros y animación entre equipos por Parsec.</p>
+    <p class="subtitle" data-i18n="toolSummary">Copia nodos, parámetros y animación entre equipos por Parsec.</p>
     <div class="actions">
-      <a class="button primary" href="../downloads/Houdini_node_copypaster-v2.1.zip" download>Descargar ZIP ↓</a>
-      <button class="button" id="copy-installer" data-installer="../downloads/INSTALAR_EN_WINDOWS.txt" type="button" hidden>Copiar instalador</button>
+      <a class="button primary" href="../downloads/Houdini_node_copypaster-v2.1.zip" download data-i18n="download">Descargar ZIP ↓</a>
+      <button class="button" id="copy-installer" data-installer="../downloads/INSTALAR_EN_WINDOWS.txt" type="button" data-i18n="copyInstaller" hidden>Copiar instalador</button>
     </div>
     <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
     <section class="install" aria-labelledby="instalar-titulo">
-      <h2 id="instalar-titulo">Instalación y uso</h2>
+      <h2 id="instalar-titulo" data-i18n="installation">Instalación y uso</h2>
       <ol>
-        <li>En ambos Houdini: abre <strong>Windows → Python Shell</strong>, pega el instalador y pulsa Enter.</li>
-        <li>Selecciona los nodos y pulsa <strong>Copy Nodes</strong> en la pestaña <strong>Parsec Nodes v2.1</strong>.</li>
-        <li>En el otro equipo, abre una red del mismo tipo y pulsa <strong>Paste Nodes</strong>.</li>
+        <li data-i18n-html="step1">En ambos Houdini: abre <strong>Windows → Python Shell</strong>, pega el instalador y pulsa Enter.</li>
+        <li data-i18n-html="step2">Selecciona los nodos y pulsa <strong>Copy Nodes</strong> en la pestaña <strong>Parsec Nodes v2.1</strong>.</li>
+        <li data-i18n-html="step3">En el otro equipo, abre una red del mismo tipo y pulsa <strong>Paste Nodes</strong>.</li>
       </ol>
-      <p class="note">Activa el portapapeles de texto compartido de Parsec. También funciona entre redes locales.</p>
+      <p class="note" data-i18n="clipboardNote">Activa el portapapeles de texto compartido de Parsec. También funciona entre redes locales.</p>
     </section>
     <details>
-      <summary>Instalación manual</summary>
-      <p>Extrae el ZIP y ejecuta esto en la Python Shell, cambiando la ruta:</p>
-      <pre><code>exec(open(r'RUTA/install_parsec_nodes.py', encoding='utf-8').read())</code></pre>
-      <p>Si no aparece la pestaña: <strong>+ de las shelves → Shelves → Parsec Nodes v2.1</strong>.</p>
-      <div class="manual-links"><a href="../downloads/INSTALAR_EN_WINDOWS.txt" download>Descargar instalador en texto</a><a href="../downloads/Houdini_node_copypaster-v2.1.zip" download>ZIP e instrucciones completas</a></div>
+      <summary data-i18n="manual">Instalación manual</summary>
+      <p data-i18n="manualIntro">Extrae el ZIP y ejecuta esto en la Python Shell, cambiando la ruta:</p>
+      <pre><code data-i18n="manualCommand">exec(open(r'RUTA/install_parsec_nodes.py', encoding='utf-8').read())</code></pre>
+      <p data-i18n-html="missingTab">Si no aparece la pestaña: <strong>+ de las shelves → Shelves → Parsec Nodes v2.1</strong>.</p>
+      <div class="manual-links"><a href="../downloads/INSTALAR_EN_WINDOWS.txt" download data-i18n="downloadInstaller">Descargar instalador en texto</a><a href="../downloads/Houdini_node_copypaster-v2.1.zip" download data-i18n="fullInstructions">ZIP e instrucciones completas</a></div>
     </details>
   </main>
 </body>
