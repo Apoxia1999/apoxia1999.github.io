@@ -3,57 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Copia cadenas de nodos de Houdini entre Linux y Windows a través de Parsec, con parámetros, VEX y animaciones. Descarga e instalación de Node Copypaster v2.1.">
-  <meta name="theme-color" content="#f5f5f2">
-  <title>Houdini Node Copypaster — Apoxia Toolkit</title>
-  <link rel="stylesheet" href="../../assets/styles.css">
-  <script src="../../assets/tool.js" defer></script>
+  <meta http-equiv="refresh" content="0;url=../../houdini-node-copypaster/">
+  <link rel="canonical" href="https://apoxia1999.github.io/houdini-node-copypaster/">
+  <title>Houdini Node Copypaster</title>
 </head>
-<body>
-  <a class="skip-link" href="#contenido">Saltar al contenido</a>
-  <div class="shell">
-    <header class="site-header">
-      <a class="brand" href="../../" aria-label="Apoxia Toolkit, inicio"><span class="brand-mark" aria-hidden="true">a.</span> Apoxia <span>Toolkit</span></a>
-      <nav class="header-nav" aria-label="Navegación principal"><a href="../../#herramientas">Herramientas</a><a href="https://github.com/Apoxia1999">GitHub ↗</a></nav>
-    </header>
-    <main id="contenido">
-      <a class="breadcrumb" href="../../#herramientas">← Volver a la colección</a>
-      <section class="detail-hero" aria-labelledby="titulo">
-        <div>
-          <div class="tool-meta"><span class="pill houdini">Houdini</span><span class="pill">v2.1</span><span>Linux · Windows</span></div>
-          <h1 id="titulo">Houdini<br>Node Copypaster</h1>
-          <p>Copia tu cadena de nodos y sigue trabajando en el otro equipo. Parámetros, conexiones, VEX y animación, a través del portapapeles de texto de Parsec.</p>
-          <div class="actions"><a class="button" href="../../downloads/Houdini_node_copypaster-v2.1.zip" download>Descargar v2.1 <span aria-hidden="true">↓</span></a><a class="button secondary" href="#instalacion">Cómo instalar</a></div>
-        </div>
-        <div class="tool-art hero-art"><img src="../../assets/node-transfer.svg" alt="Ilustración: los nodos se reconstruyen con sus conexiones de Linux a Windows" width="460" height="320"><span class="art-label">Copy Nodes → Paste Nodes</span></div>
-      </section>
-      <div class="facts" aria-label="Información rápida"><div class="fact"><span>Formato</span><strong>Shelf de Houdini</strong></div><div class="fact"><span>Instalación</span><strong>En ambos equipos</strong></div><div class="fact"><span>Requisitos</span><strong>Houdini + texto compartido</strong></div></div>
-      <section class="content-section" aria-labelledby="funciona-titulo">
-        <h2 id="funciona-titulo">De una red a otra.</h2>
-        <p class="section-lead">Dos botones en una pestaña: Parsec Nodes v2.1. Así de corto es el recorrido.</p>
-        <ol class="steps"><li><span class="step-number" aria-hidden="true">01</span><h3>Selecciona y copia</h3><p>Selecciona una cadena de nodos en una sola red y pulsa <strong>Copy Nodes</strong> en la shelf.</p></li><li><span class="step-number" aria-hidden="true">02</span><h3>Cambia de equipo</h3><p>Entra en Parsec y deja un momento para que se sincronice el portapapeles de texto.</p></li><li><span class="step-number" aria-hidden="true">03</span><h3>Pega y continúa</h3><p>Abre una red del mismo tipo en el destino y pulsa <strong>Paste Nodes</strong>. También funciona entre redes locales.</p></li></ol>
-      </section>
-      <section class="content-section" id="instalacion" aria-labelledby="instalacion-titulo">
-        <h2 id="instalacion-titulo">Instálalo una vez. En cada equipo.</h2>
-        <p class="section-lead">Descarga y extrae el ZIP. En Houdini, abre <strong>Windows → Python Shell</strong> y ejecuta el comando de tu sistema, ajustando la ruta al instalador.</p>
-        <div class="install-grid">
-          <article class="install-card"><h3>Linux</h3><p>Sustituye <code>/ruta/</code> por la carpeta donde hayas extraído la herramienta.</p><div class="codebox"><div class="codebar"><span>PYTHON SHELL</span><button class="copy-button" type="button" data-copy="linux-command" hidden>Copiar</button></div><pre><code id="linux-command">exec(open('/ruta/install_parsec_nodes.py', encoding='utf-8').read())</code></pre></div></article>
-          <article class="install-card"><h3>Windows</h3><p>Sustituye <code>C:\ruta\</code> por la ubicación real del instalador.</p><div class="codebox"><div class="codebar"><span>PYTHON SHELL</span><button class="copy-button" type="button" data-copy="windows-command" hidden>Copiar</button></div><pre><code id="windows-command">exec(open(r'C:\ruta\install_parsec_nodes.py', encoding='utf-8').read())</code></pre></div></article>
-        </div>
-        <p class="install-note">No necesitas reiniciar Houdini ni instalar paquetes Python. Si la pestaña no aparece, usa el <strong>+ de las shelves → Shelves → Parsec Nodes v2.1</strong>.</p>
-        <div class="remote-install"><div><h3>¿Prefieres instalarlo directamente por Parsec?</h3><p>Copia la línea de instalación en este equipo, pégala en la Python Shell del Houdini remoto y pulsa Enter. Guarda los botones en las preferencias de ese Houdini.</p></div><button class="button secondary" id="copy-installer" type="button" hidden>Copiar instalador <span aria-hidden="true">↗</span></button></div>
-        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
-        <p class="install-note">También puedes <a href="../../downloads/INSTALAR_EN_WINDOWS.txt" download>descargar la línea como archivo de texto</a>, abrirla y copiarla completa.</p>
-      </section>
-      <section class="content-section" aria-labelledby="compatibilidad-titulo">
-        <h2 id="compatibilidad-titulo">Qué viaja con tus nodos.</h2>
-        <div class="capability-grid"><div><h3>Dentro de la copia</h3><ul class="plain-list"><li>Cadenas de nodos estándar de Houdini.</li><li>Parámetros, conexiones y código VEX.</li><li>Expresiones, rampas y parámetros personalizados.</li><li>Claves numéricas y de texto, interpolación y tangentes.</li><li>Ciclos, extrapolación y claves en subframes.</li></ul></div><div><h3>A tener en cuenta</h3><ul class="plain-list"><li>Los tipos y parámetros deben existir en el destino.</li><li>Los tiempos de las claves se conservan en segundos, también con FPS distintos.</li><li>Los HDAs externos, las subredes editadas y la geometría bloqueada quedan fuera.</li><li>Las texturas, cachés, notas y cajas no se transportan.</li><li>Las referencias externas pueden necesitar ajustes.</li></ul></div></div>
-        <p class="notice">La red se reconstruye con la API de Houdini. La herramienta no convierte licencias de contenido ni elimina restricciones de archivos o HDAs externos. Probada en Houdini Apprentice 22.0.466 en Linux; la comprobación de la sesión comercial de FX en Windows sigue pendiente.</p>
-        <p class="install-note">Para usar atajos: mantén <strong>Ctrl + Alt + Shift</strong> y haz clic en cada botón de la shelf. Puedes asignar <strong>Ctrl + Shift + C</strong> y <strong>Ctrl + Shift + V</strong>, revisando posibles conflictos.</p>
-      </section>
-      <div class="detail-bottom"><div><strong>Tu siguiente cadena empieza aquí.</strong><p>Versión 2.1 · Incluye instalador, código e instrucciones.</p></div><a class="button" href="../../downloads/Houdini_node_copypaster-v2.1.zip" download>Descargar ZIP <span aria-hidden="true">↓</span></a></div>
-    </main>
-    <footer class="site-footer"><span>Apoxia Toolkit · Utilidades propias</span><a href="../../">Volver al inicio ↗</a></footer>
-  </div>
-</body>
+<body><p><a href="../../houdini-node-copypaster/">Abrir Houdini Node Copypaster</a></p></body>
 </html>
