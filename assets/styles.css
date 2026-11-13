@@ -52,6 +52,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible {
   outline-offset:4px;
 }
 .grid {
+  margin-top:28px;
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
   gap:16px;
