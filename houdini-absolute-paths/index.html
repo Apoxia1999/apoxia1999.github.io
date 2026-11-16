@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Houdini Absolute Paths v1.0. Convierte $HIP y $JOB en rutas absolutas en toda la escena." data-i18n-content="absDescription">
+  <title>Houdini Absolute Paths — Apoxia Toolkit</title>
+  <link rel="canonical" href="https://apoxia1999.github.io/houdini-absolute-paths/">
+  <link rel="stylesheet" href="../assets/styles.css?v=i18n">
+  <script src="../assets/i18n.js?v=2.3" defer></script>
+</head>
+<body>
+  <main class="tool-page">
+    <header class="page-header tool-header">
+      <a class="back" href="../">← Apoxia Toolkit</a>
+      <div class="language-switch" role="group" aria-label="Idioma" data-i18n-aria-label="language" hidden>
+        <button type="button" data-language="es" lang="es" aria-label="Español" aria-pressed="true">ES</button>
+        <button type="button" data-language="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+      </div>
+    </header>
+    <img class="tool-cover" src="../assets/absolute-paths.svg" alt="Nodo de Houdini Absolute Paths" data-i18n-alt="absNodeAlt" width="640" height="340">
+    <span class="version">v1.0 · Houdini 22</span>
+    <h1>Houdini Absolute Paths</h1>
+    <p class="subtitle" data-i18n="absSummary">Convierte $HIP, $HIPNAME, $HIPFILE y $JOB en rutas absolutas en toda la escena, para copiar el .hip sin romper ningún link.</p>
+    <div class="actions">
+      <a class="button primary" href="../downloads/hip_to_absolute_paths.py" download data-i18n="absDownload">Descargar script ↓</a>
+    </div>
+    <p class="note" data-i18n-html="absIntegrity">Huella SHA-256 del script en <a href="../downloads/SHA256SUMS">SHA256SUMS</a>.</p>
+    <section class="install" aria-labelledby="uso-titulo">
+      <h2 id="uso-titulo" data-i18n="absUsage">Uso</h2>
+      <ol>
+        <li data-i18n-html="absStep1">Con la escena abierta, abre <strong>Windows → Python Shell</strong> y ejecuta el script con el comando de abajo.</li>
+        <li data-i18n-html="absStep2">Revisa en la consola la lista de parámetros cambiados (ruta anterior y nueva) y los omitidos.</li>
+        <li data-i18n-html="absStep3">Guarda el .hip. Todo el cambio es un solo paso de <strong>Undo</strong>.</li>
+      </ol>
+      <p data-i18n="absCommandIntro">Cambia la ruta por la carpeta donde descargaste el script:</p>
+      <pre><code data-i18n="absCommand">exec(open(r'RUTA/hip_to_absolute_paths.py', encoding='utf-8').read())</code></pre>
+      <p data-i18n-html="absDryRun">Para ver qué cambiaría sin tocar nada, pon <code>DRY_RUN = True</code> al inicio del script.</p>
+      <p class="note" data-i18n="absKeeps">Se conservan $F, $F4, $OS, &lt;UDIM&gt; y el resto de variables. También fija el Base Name del File Cache, que usa $HIPNAME.</p>
+      <p class="note" data-i18n="absSkips">No toca el interior de HDAs bloqueados, los parámetros bloqueados ni las expresiones que usan $HIP: los lista como omitidos para revisarlos a mano.</p>
+      <p class="note" data-i18n="absCaches">Los caches no se mueven: las rutas quedan apuntando a su ubicación actual.</p>
+    </section>
+  </main>
+</body>
+</html>

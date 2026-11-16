@@ -28,7 +28,23 @@
       fullInstructions: 'ZIP e instrucciones completas',
       copySuccess: 'Copiado. Pégalo en Windows → Python Shell de Houdini y pulsa Enter.',
       copyError: 'No se pudo copiar. Descarga el ZIP y usa el instalador incluido.',
-      openTool: 'Abrir Houdini Node Copypaster'
+      openTool: 'Abrir Houdini Node Copypaster',
+      absDescription: 'Houdini Absolute Paths v1.0. Convierte $HIP y $JOB en rutas absolutas en toda la escena.',
+      absNodeAlt: 'Nodo de Houdini Absolute Paths',
+      absCardDescription: 'Convierte $HIP en rutas absolutas.',
+      absSummary: 'Convierte $HIP, $HIPNAME, $HIPFILE y $JOB en rutas absolutas en toda la escena, para copiar el .hip sin romper ningún link.',
+      absDownload: 'Descargar script ↓',
+      absIntegrity: 'Huella SHA-256 del script en <a href="../downloads/SHA256SUMS">SHA256SUMS</a>.',
+      absUsage: 'Uso',
+      absStep1: 'Con la escena abierta, abre <strong>Windows → Python Shell</strong> y ejecuta el script con el comando de abajo.',
+      absStep2: 'Revisa en la consola la lista de parámetros cambiados (ruta anterior y nueva) y los omitidos.',
+      absStep3: 'Guarda el .hip. Todo el cambio es un solo paso de <strong>Undo</strong>.',
+      absCommandIntro: 'Cambia la ruta por la carpeta donde descargaste el script:',
+      absCommand: "exec(open(r'RUTA/hip_to_absolute_paths.py', encoding='utf-8').read())",
+      absDryRun: 'Para ver qué cambiaría sin tocar nada, pon <code>DRY_RUN = True</code> al inicio del script.',
+      absKeeps: 'Se conservan $F, $F4, $OS, <UDIM> y el resto de variables. También fija el Base Name del File Cache, que usa $HIPNAME.',
+      absSkips: 'No toca el interior de HDAs bloqueados, los parámetros bloqueados ni las expresiones que usan $HIP: los lista como omitidos para revisarlos a mano.',
+      absCaches: 'Los caches no se mueven: las rutas quedan apuntando a su ubicación actual.'
     },
     en: {
       language: 'Language',
@@ -56,7 +72,23 @@
       fullInstructions: 'ZIP and full instructions',
       copySuccess: 'Copied. Paste it into Houdini’s Windows → Python Shell and press Enter.',
       copyError: 'Could not copy. Download the ZIP and use the bundled installer.',
-      openTool: 'Open Houdini Node Copypaster'
+      openTool: 'Open Houdini Node Copypaster',
+      absDescription: 'Houdini Absolute Paths v1.0. Turn $HIP and $JOB into absolute paths across the whole scene.',
+      absNodeAlt: 'Houdini Absolute Paths node',
+      absCardDescription: 'Turn $HIP into absolute paths.',
+      absSummary: 'Turn $HIP, $HIPNAME, $HIPFILE and $JOB into absolute paths across the whole scene, so you can copy the .hip without breaking any link.',
+      absDownload: 'Download script ↓',
+      absIntegrity: 'The script’s SHA-256 hash is in <a href="../downloads/SHA256SUMS">SHA256SUMS</a>.',
+      absUsage: 'Usage',
+      absStep1: 'With the scene open, open <strong>Windows → Python Shell</strong> and run the script with the command below.',
+      absStep2: 'Check the console for the list of changed parameters (old and new path) and the skipped ones.',
+      absStep3: 'Save the .hip. The whole change is a single <strong>Undo</strong> step.',
+      absCommandIntro: 'Replace the path with the folder where you downloaded the script:',
+      absCommand: "exec(open(r'PATH/hip_to_absolute_paths.py', encoding='utf-8').read())",
+      absDryRun: 'To see what would change without touching anything, set <code>DRY_RUN = True</code> at the top of the script.',
+      absKeeps: '$F, $F4, $OS, <UDIM> and every other variable are kept. It also pins the File Cache Base Name, which uses $HIPNAME.',
+      absSkips: 'It does not touch the inside of locked HDAs, locked parameters or expressions that use $HIP: those are listed as skipped so you can review them by hand.',
+      absCaches: 'Caches are not moved: the paths keep pointing at their current location.'
     }
   };
   const supported = value => Object.hasOwn(messages, value);
