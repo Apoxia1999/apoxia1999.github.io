@@ -29,7 +29,7 @@
       copySuccess: 'Copiado. Pégalo en Windows → Python Shell de Houdini y pulsa Enter.',
       copyError: 'No se pudo copiar. Descarga el ZIP y usa el instalador incluido.',
       openTool: 'Abrir Houdini Node Copypaster',
-      absDescription: 'Houdini Absolute Paths v1.0. Convierte $HIP y $JOB en rutas absolutas en toda la escena.',
+      absDescription: 'Houdini Absolute Paths v1.1. Convierte $HIP y $JOB en rutas absolutas en toda la escena.',
       absNodeAlt: 'Nodo de Houdini Absolute Paths',
       absCardDescription: 'Convierte $HIP en rutas absolutas.',
       absSummary: 'Convierte $HIP, $HIPNAME, $HIPFILE y $JOB en rutas absolutas en toda la escena, para copiar el .hip sin romper ningún link.',
@@ -44,6 +44,7 @@
       absDryRun: 'Para ver qué cambiaría sin tocar nada, pon <code>DRY_RUN = True</code> al inicio del script.',
       absKeeps: 'Se conservan $F, $F4, $OS, <UDIM> y el resto de variables. También fija el Base Name del File Cache, que usa $HIPNAME.',
       absSkips: 'No toca el interior de HDAs bloqueados, los parámetros bloqueados ni las expresiones que usan $HIP: los lista como omitidos para revisarlos a mano.',
+      absRops: 'Los ROPs y nodos de render no se tocan: sus rutas de salida siguen al .hip copiado, así no se sobrescriben los renders originales. El File Cache sí se convierte. Pon <code>SKIP_ROPS = False</code> para convertirlos también.',
       absCaches: 'Los caches no se mueven: las rutas quedan apuntando a su ubicación actual.'
     },
     en: {
@@ -73,7 +74,7 @@
       copySuccess: 'Copied. Paste it into Houdini’s Windows → Python Shell and press Enter.',
       copyError: 'Could not copy. Download the ZIP and use the bundled installer.',
       openTool: 'Open Houdini Node Copypaster',
-      absDescription: 'Houdini Absolute Paths v1.0. Turn $HIP and $JOB into absolute paths across the whole scene.',
+      absDescription: 'Houdini Absolute Paths v1.1. Turn $HIP and $JOB into absolute paths across the whole scene.',
       absNodeAlt: 'Houdini Absolute Paths node',
       absCardDescription: 'Turn $HIP into absolute paths.',
       absSummary: 'Turn $HIP, $HIPNAME, $HIPFILE and $JOB into absolute paths across the whole scene, so you can copy the .hip without breaking any link.',
@@ -88,6 +89,7 @@
       absDryRun: 'To see what would change without touching anything, set <code>DRY_RUN = True</code> at the top of the script.',
       absKeeps: '$F, $F4, $OS, <UDIM> and every other variable are kept. It also pins the File Cache Base Name, which uses $HIPNAME.',
       absSkips: 'It does not touch the inside of locked HDAs, locked parameters or expressions that use $HIP: those are listed as skipped so you can review them by hand.',
+      absRops: 'ROPs and render nodes are left alone: their output paths follow the copied .hip, so the original renders are not overwritten. File Cache is still converted. Set <code>SKIP_ROPS = False</code> to convert them too.',
       absCaches: 'Caches are not moved: the paths keep pointing at their current location.'
     }
   };

@@ -5,6 +5,7 @@ en rutas absolutas (globales), para poder copiar el .hip a otro sitio sin romper
 Uso: pegar en Windows > Python Source Editor (o en una Shelf Tool) y ejecutar.
 
 - Solo sustituye esas variables; $F, $F4, $OS, $SF, <UDIM>, etc. se conservan.
+- Los ROPs no se tocan (SKIP_ROPS): sus rutas de salida siguen al .hip copiado.
 - Todo queda en un solo paso de Undo (Ctrl+Z lo revierte).
 - Pon DRY_RUN = True para ver que cambiaria sin tocar nada.
 """
@@ -14,6 +15,10 @@ import hou
 DRY_RUN = False          # True = solo listar, no modificar
 ONLY_FILE_PARMS = False  # True = solo parametros de tipo "File" (no toca p.ej. el
                          # "Base Name" del File Cache, que usa $HIPNAME)
+SKIP_ROPS = True         # True = no tocar ROPs / nodos de render (rutas de salida)
+# Nodos de salida que no se llaman "rop": se omiten tambien con SKIP_ROPS
+EXTRA_OUTPUT_TYPES = ("karma", "karmarendersettings", "rendersettings",
+                      "renderproduct", "usdrender", "usdexport")
 VARIABLES = ["HIPNAME", "HIPFILE", "HIP", "JOB"]  # quita "JOB" si quieres conservarlo
 
 # $HIP, ${HIP}, $HIPNAME, ... (sin confundir $HIP con $HIPNAME)
@@ -34,13 +39,27 @@ def _replace(raw, values):
     return _PATTERN.sub(lambda m: values[m.group(1) or m.group(2)], raw)
 
 
+def _is_rop(node):
+    """ROPs de /out, y nodos ROP de SOPs, LOPs, TOPs, COPs... (no el File Cache)."""
+    node_type = node.type()
+    if node_type.category() == hou.ropNodeTypeCategory():
+        return True
+    name = node_type.nameComponents()[2].lower()
+    return name.startswith("rop") or name.endswith("rop") or name in EXTRA_OUTPUT_TYPES
+
+
 def hip_to_absolute():
     values = {v: _expand(v) for v in VARIABLES}
-    changed, skipped = [], []
+    changed, skipped, rops = [], [], []
 
     with hou.undos.group("HIP paths -> absolute"):
         for node in hou.node("/").allSubChildren():
             if node.isInsideLockedHDA():
+                continue
+            if SKIP_ROPS and _is_rop(node):
+                if any(_PATTERN.search(p.rawValue()) for p in node.parms()
+                       if p.parmTemplate().type() == hou.parmTemplateType.String):
+                    rops.append(node.path())
                 continue
 
             for parm in node.parms():
@@ -95,12 +114,19 @@ def hip_to_absolute():
         for path, reason in skipped:
             print("%s  [%s]" % (path, reason))
 
+    if rops:
+        print("\n=== ROPS SIN TOCAR (SKIP_ROPS): %d ===" % len(rops))
+        for path in rops:
+            print(path)
+
     msg = "%s %d parametros." % ("Se cambiarian" if DRY_RUN else "Cambiados", len(changed))
     if skipped:
         msg += "\n%d omitidos (ver la consola de Python)." % len(skipped)
+    if rops:
+        msg += "\n%d ROPs sin tocar." % len(rops)
     if hou.isUIAvailable():
         hou.ui.displayMessage(msg, title="HIP -> rutas absolutas")
-    return changed, skipped
+    return changed, skipped, rops
 
 
 hip_to_absolute()
