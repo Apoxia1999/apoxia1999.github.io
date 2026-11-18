@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="ROP Clean v1.0. Borra de la escena de Houdini todo lo que no usan los ROPs seleccionados." data-i18n-content="rcDescription">
+  <meta name="description" content="ROP Clean v1.1. Borra de la escena de Houdini todo lo que no usan los ROPs seleccionados." data-i18n-content="rcDescription">
   <title>ROP Clean — Apoxia Toolkit</title>
   <link rel="canonical" href="https://apoxia1999.github.io/rop-clean/">
   <link rel="stylesheet" href="../assets/styles.css?v=i18n">
-  <script src="../assets/i18n.js?v=2.8" defer></script>
-  <script src="../assets/tool.js?v=2.8" defer></script>
+  <script src="../assets/i18n.js?v=2.9" defer></script>
+  <script src="../assets/tool.js?v=2.9" defer></script>
 </head>
 <body>
   <main class="tool-page">
@@ -20,7 +20,7 @@
       </div>
     </header>
     <img class="tool-cover" src="../assets/rop-clean.svg" alt="Un ROP de Houdini conectado a los nodos que usa; los que no usa, tachados" data-i18n-alt="rcAlt" width="640" height="340">
-    <span class="version">v1.0 · Houdini 22</span>
+    <span class="version">v1.1 · Houdini 22</span>
     <h1>ROP Clean</h1>
     <p class="subtitle" data-i18n="rcSummary">Selecciona uno o varios ROPs y borra de la escena todo lo que no usan para renderizar: objetos, cámaras, luces, subnets, materiales y otros ROPs.</p>
     <div class="actions">
@@ -44,6 +44,7 @@
       <p class="note" data-i18n="rcKeeps">Conserva los objetos y luces que ve el render (candidatos visibles y forzados, menos los excluidos), solo la cámara de cada ROP, todo nodo al que apunte un parámetro o una expresión de lo conservado, y los materiales asignados en el objeto, en el Material SOP o por atributo.</p>
       <p class="note" data-i18n="rcFolders">Los subnets y matnets se quedan solo como contenedor: lo que no se usa dentro también se borra.</p>
       <p class="note" data-i18n="rcSafety">Todo es un único paso de Undo. Si la escena tiene nombre, guarda antes una copia de seguridad numerada del .hip.</p>
+      <p class="note" data-i18n="rcProtected">Los nodos protegidos (dentro de assets bloqueados o sin permisos) se dejan como están y se listan al terminar.</p>
       <p class="note" data-i18n="rcRenderers">Funciona con Mantra, Redshift, Arnold y Karma (Solaris). Con un motor que no reconoce, conserva todos los objetos visibles. Usa el valor de los parámetros en el take activo.</p>
     </section>
   </main>

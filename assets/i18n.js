@@ -68,7 +68,7 @@
       fbUse3: 'Haz clic en la geometría que quieres enfocar. La Focus Distance de la cámara cambia a esa distancia. <strong>Esc</strong> para salir sin cambiar nada.',
       fbHow: 'Mide la profundidad del punto a lo largo del eje de la cámara, que es lo que usa el plano de foco. Si la Focus Distance está animada, crea un keyframe en el frame actual. Se deshace con un solo Undo.',
       fbLimit: 'Funciona con cámaras de OBJ, en contexto OBJ o SOP. No funciona en Solaris (LOPs).',
-      rcDescription: 'ROP Clean v1.0. Borra de la escena de Houdini todo lo que no usan los ROPs seleccionados.',
+      rcDescription: 'ROP Clean v1.1. Borra de la escena de Houdini todo lo que no usan los ROPs seleccionados.',
       rcAlt: 'Un ROP de Houdini conectado a los nodos que usa; los que no usa, tachados',
       rcCardDescription: 'Deja solo lo que usan tus ROPs.',
       rcSummary: 'Selecciona uno o varios ROPs y borra de la escena todo lo que no usan para renderizar: objetos, cámaras, luces, subnets, materiales y otros ROPs.',
@@ -87,6 +87,7 @@
       rcKeeps: 'Conserva los objetos y luces que ve el render (candidatos visibles y forzados, menos los excluidos), solo la cámara de cada ROP, todo nodo al que apunte un parámetro o una expresión de lo conservado, y los materiales asignados en el objeto, en el Material SOP o por atributo.',
       rcFolders: 'Los subnets y matnets se quedan solo como contenedor: lo que no se usa dentro también se borra.',
       rcSafety: 'Todo es un único paso de Undo. Si la escena tiene nombre, guarda antes una copia de seguridad numerada del .hip.',
+      rcProtected: 'Los nodos protegidos (dentro de assets bloqueados o sin permisos) se dejan como están y se listan al terminar.',
       rcRenderers: 'Funciona con Mantra, Redshift, Arnold y Karma (Solaris). Con un motor que no reconoce, conserva todos los objetos visibles. Usa el valor de los parámetros en el take activo.'
     },
     en: {
@@ -155,7 +156,7 @@
       fbUse3: 'Click the geometry you want in focus. The camera Focus Distance changes to that distance. <strong>Esc</strong> exits without changing anything.',
       fbHow: 'It measures the point depth along the camera axis, which is what the focus plane uses. If Focus Distance is animated, it sets a keyframe on the current frame. A single Undo reverts it.',
       fbLimit: 'Works with OBJ cameras, in OBJ or SOP context. Does not work in Solaris (LOPs).',
-      rcDescription: 'ROP Clean v1.0. Delete everything in the Houdini scene that the selected ROPs do not use.',
+      rcDescription: 'ROP Clean v1.1. Delete everything in the Houdini scene that the selected ROPs do not use.',
       rcAlt: 'A Houdini ROP wired to the nodes it uses; the unused ones crossed out',
       rcCardDescription: 'Keep only what your ROPs use.',
       rcSummary: 'Select one or more ROPs and delete everything in the scene they do not need to render: objects, cameras, lights, subnets, materials and other ROPs.',
@@ -174,6 +175,7 @@
       rcKeeps: 'It keeps the objects and lights the render sees (visible and forced candidates, minus excluded ones), only each ROP’s camera, every node referenced by a parameter or expression of what is kept, and materials assigned on the object, on a Material SOP or through attributes.',
       rcFolders: 'Subnets and matnets stay only as containers: whatever is unused inside them is deleted too.',
       rcSafety: 'It is a single Undo step. If the scene has a file name, a numbered .hip backup is saved first.',
+      rcProtected: 'Protected nodes (inside locked assets or without permission) are left as they are and listed at the end.',
       rcRenderers: 'Works with Mantra, Redshift, Arnold and Karma (Solaris). With a renderer it does not recognise, it keeps every visible object. It uses parameter values from the current take.'
     }
   };

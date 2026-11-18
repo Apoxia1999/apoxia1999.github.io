@@ -1,5 +1,5 @@
 """
-ROP Clean v1.0  -  Shelf tool para Houdini
+ROP Clean v1.1  -  Shelf tool para Houdini
 ------------------------------------------
 Selecciona uno o varios ROPs (en /out, o ROPs de render en /stage) y pulsa
 la herramienta. Se borra todo lo que esos ROPs NO necesitan para renderizar:
@@ -86,7 +86,7 @@ def _is_rop(node):
 def _safe_glob(base, pattern):
     try:
         return list(base.glob(pattern))
-    except (hou.OperationFailed, TypeError):
+    except (hou.Error, TypeError):
         return []
 
 
@@ -131,7 +131,7 @@ def _resolve(value, rel_node, obj_fallback=False):
             continue
         try:
             n = rel_node.node(tok)
-        except hou.OperationFailed:
+        except hou.Error:
             n = None
         if n is None and obj_fallback and not tok.startswith("/"):
             n = hou.node("/obj/" + tok)
@@ -168,7 +168,7 @@ def _object_list_mode(parm):
     try:
         if parm.parmTemplate().type() != hou.parmTemplateType.String:
             return None
-    except hou.OperationFailed:
+    except hou.Error:
         return None
     if "exclude" in lname:
         return "exclude"
@@ -210,6 +210,7 @@ class _Collector(object):
         self.folder = {}     # path -> node : node kept only as a container
         self._queue = []
         self._scanned = set()
+        self.warnings = []
 
     # -- marking ------------------------------------------------------------ #
     def keep(self, node):
@@ -249,14 +250,19 @@ class _Collector(object):
             if contents:
                 try:
                     nodes.extend(node.allSubChildren())
-                except hou.OperationFailed:
+                except hou.Error:
                     pass
             for n in nodes:
                 key = (n.path(), contents or n is not node)
                 if key in self._scanned:
                     continue
                 self._scanned.add(key)
-                self._scan_node(n)
+                try:
+                    self._scan_node(n)
+                except hou.Error as e:
+                    # Nodos protegidos (assets bloqueados, takes...): se
+                    # conservan tal cual y se sigue con el resto.
+                    self.warnings.append("%s: %s" % (n.path(), e))
 
     def _scan_node(self, node):
         # Wired inputs (also transform parents for objects, ROP dependencies).
@@ -274,7 +280,7 @@ class _Collector(object):
                 if is_rop and ref.type().category() == hou.objNodeTypeCategory():
                     continue
                 self.keep(ref)
-        except (hou.OperationFailed, TypeError, AttributeError):
+        except (hou.Error, TypeError, AttributeError):
             pass
         # String parameters pointing to nodes.
         obj_fallback = cat in (hou.ropNodeTypeCategory(), hou.lopNodeTypeCategory())
@@ -288,7 +294,7 @@ class _Collector(object):
                 if parm.parmTemplate().type() != hou.parmTemplateType.String:
                     continue
                 value = parm.evalAsString()
-            except (hou.OperationFailed, hou.Error):
+            except hou.Error:
                 continue
             if not value:
                 continue
@@ -354,7 +360,7 @@ class _Collector(object):
             return
         try:
             geo = sop.geometry()
-        except hou.OperationFailed:
+        except hou.Error:
             return
         if geo is None:
             return
@@ -362,13 +368,13 @@ class _Collector(object):
             for finder in (geo.findPrimAttrib, geo.findPointAttrib, geo.findGlobalAttrib):
                 try:
                     attrib = finder(name)
-                except hou.OperationFailed:
+                except hou.Error:
                     attrib = None
                 if attrib is None or attrib.dataType() != hou.attribData.String:
                     continue
                 try:
                     values = attrib.strings()
-                except hou.OperationFailed:
+                except hou.Error:
                     values = [geo.attribValue(name)] if finder == geo.findGlobalAttrib else []
                 for v in values:
                     for t in _resolve(v, sop):
@@ -467,21 +473,38 @@ def rop_clean(rops=None, dry_run=False, confirm=True):
         try:
             backup = hou.hipFile.saveAsBackup()
             print("ROP Clean: copia de seguridad en %s" % backup)
-        except hou.OperationFailed as e:
+        except hou.Error as e:
             print("ROP Clean: no se pudo guardar la copia de seguridad (%s)" % e)
 
-    deleted = []
+    deleted, failed = [], []
     with hou.undos.group("ROP Clean"):
         for node in to_delete:
             try:
                 path = node.path()
+            except hou.ObjectWasDeleted:
+                continue
+            try:
                 node.destroy()
                 deleted.append(path)
-            except (hou.ObjectWasDeleted, hou.OperationFailed, hou.PermissionError):
+            except hou.ObjectWasDeleted:
                 pass
+            except hou.Error as e:
+                # Protegido (asset bloqueado, permisos, takes): se deja y se avisa.
+                failed.append("%s: %s" % (path, str(e).strip()))
 
     msg = "ROP Clean: %d nodos borrados. Ctrl+Z para deshacer." % len(deleted)
     print(msg)
+    problems = failed + collector.warnings
+    if problems:
+        print("ROP Clean: %d nodos no se pudieron tocar y se han dejado:\n  %s"
+              % (len(problems), "\n  ".join(problems)))
+        if ui and confirm:
+            hou.ui.displayMessage(
+                "%s\n\n%d nodos estaban protegidos y se han dejado como estaban."
+                % (msg, len(problems)),
+                severity=hou.severityType.Warning, title="ROP Clean",
+                details="\n".join(problems), details_label="Nodos protegidos")
+            return deleted
     if ui and confirm:
         hou.ui.setStatusMessage(msg)
     return deleted
@@ -489,5 +512,20 @@ def rop_clean(rops=None, dry_run=False, confirm=True):
 
 # Shelf tool: when this file is pasted into a shelf tool's Script tab,
 # it runs on the current selection.
+def _run_from_shelf():
+    try:
+        rop_clean()
+    except Exception as e:
+        import traceback
+        text = traceback.format_exc()
+        print(text)
+        if hou.isUIAvailable():
+            hou.ui.displayMessage(
+                "ROP Clean: error inesperado (%s). No se ha borrado nada que no "
+                "se pueda deshacer con Ctrl+Z.\n\nEnvía el detalle para revisarlo." % e,
+                severity=hou.severityType.Error, title="ROP Clean",
+                details=text, details_label="Detalle del error")
+
+
 if __name__ in ("__main__", "__builtin__", "builtins") or "kwargs" in globals():
-    rop_clean()
+    _run_from_shelf()
