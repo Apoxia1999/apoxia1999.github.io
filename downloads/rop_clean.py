@@ -1,5 +1,5 @@
 """
-ROP Clean v1.1  -  Shelf tool para Houdini
+ROP Clean v1.2  -  Shelf tool para Houdini
 ------------------------------------------
 Selecciona uno o varios ROPs (en /out, o ROPs de render en /stage) y pulsa
 la herramienta. Se borra todo lo que esos ROPs NO necesitan para renderizar:
@@ -14,7 +14,9 @@ Qué se conserva (se repite hasta que no aparece nada nuevo):
   * Todo nodo al que apunte un parámetro de algo conservado (rutas, op:,
     expresiones ch()/chs(), bundles), sus entradas y padres de transformación.
   * Los materiales del objeto, del Material SOP y del atributo
-    shop_materialpath de la geometría cocinada.
+    shop_materialpath de la geometría ya cocinada. No cocina nada: si un
+    objeto no está cocinado, se conservan todos los materiales por seguridad.
+  * Interrupt cancela el análisis sin borrar nada.
   * Los geos conservados mantienen toda su red SOP y los materiales toda su
     red VOP. Subnets y matnets se quedan solo como contenedor: lo que no se
     usa dentro también se borra.
@@ -28,6 +30,8 @@ Desde Python:
     rop_clean([hou.node("/out/mantra1")])
 """
 
+import re
+
 import hou
 
 # --------------------------------------------------------------------------- #
@@ -37,9 +41,13 @@ import hou
 # Redes de primer nivel que se limpian. Lo que está fuera no se toca.
 CONTEXTS_TO_CLEAN = ("/obj", "/mat", "/shop", "/out", "/stage", "/img", "/ch", "/tasks")
 
-# Cocina la geometría conservada para encontrar materiales asignados por
-# atributo (shop_materialpath). Más lento en escenas pesadas, pero más preciso.
-READ_GEOMETRY_MATERIALS = True
+# Materiales asignados por atributo (shop_materialpath):
+#   "cached" -> lee solo la geometría ya cocinada (rápido). Si algún objeto
+#               conservado no está cocinado, se conservan TODOS los materiales.
+#   "cook"   -> cocina la geometría para leerlos (exacto, pero puede tardar
+#               mucho en escenas pesadas: sims, VEX, cachés sin escribir).
+#   "off"    -> no mira la geometría y conserva todos los materiales.
+GEOMETRY_MATERIALS = "cached"
 
 # Guarda una copia de seguridad numerada del .hip antes de borrar.
 MAKE_BACKUP = True
@@ -187,6 +195,47 @@ def _is_object_subnet(node):
         return False
 
 
+def _is_material_node(node):
+    """Material, VOP/SHOP node or a network that holds them (matnet, shopnet)."""
+    vop_cats = (hou.vopNodeTypeCategory(), hou.shopNodeTypeCategory())
+    cat = node.type().category()
+    if cat in vop_cats:
+        return True
+    if cat in (hou.objNodeTypeCategory(), hou.managerNodeTypeCategory(),
+               hou.ropNodeTypeCategory()):
+        try:
+            return node.childTypeCategory() in vop_cats
+        except AttributeError:
+            return False
+    return False
+
+
+_SAFE_EXPR = re.compile(r"^\s*(chsop|chs|ch|opinputpath|opfullpath|oppath|opname)\s*\(")
+
+
+def _string_value(parm):
+    """Value of a string parm without cooking geometry.
+
+    Plain values and simple channel/node-path expressions are evaluated.
+    Anything else (expressions that could read geometry, like point() or
+    details()) is returned as raw text so no SOP gets cooked.
+    """
+    try:
+        raw = parm.unexpandedString()
+    except hou.Error:
+        # Keyframed / expression parm.
+        try:
+            expr = parm.expression()
+        except hou.Error:
+            return ""
+        return parm.evalAsString() if _SAFE_EXPR.match(expr) else expr
+    if "`" in raw:
+        segments = raw.split("`")[1::2]
+        if not all(_SAFE_EXPR.match(seg) for seg in segments):
+            return raw.replace("`", " ")
+    return parm.evalAsString()
+
+
 def _is_camera(node):
     name = node.type().nameComponents()[2].lower()
     return name in ("cam", "stereocam", "stereocamrig", "vrcam") or "camera" in name
@@ -211,6 +260,8 @@ class _Collector(object):
         self._queue = []
         self._scanned = set()
         self.warnings = []
+        self.materials_unknown = GEOMETRY_MATERIALS == "off"
+        self.operation = None
 
     # -- marking ------------------------------------------------------------ #
     def keep(self, node):
@@ -253,12 +304,16 @@ class _Collector(object):
                 except hou.Error:
                     pass
             for n in nodes:
+                if self.operation is not None:
+                    self.operation.updateProgress(-1.0)  # lanza si se pulsa Interrupt
                 key = (n.path(), contents or n is not node)
                 if key in self._scanned:
                     continue
                 self._scanned.add(key)
                 try:
                     self._scan_node(n)
+                except hou.OperationInterrupted:
+                    raise
                 except hou.Error as e:
                     # Nodos protegidos (assets bloqueados, takes...): se
                     # conservan tal cual y se sigue con el resto.
@@ -293,7 +348,7 @@ class _Collector(object):
             try:
                 if parm.parmTemplate().type() != hou.parmTemplateType.String:
                     continue
-                value = parm.evalAsString()
+                value = _string_value(parm)
             except hou.Error:
                 continue
             if not value:
@@ -317,7 +372,7 @@ class _Collector(object):
 
         if is_rop:
             self._scan_renderer_objects(node)
-        if READ_GEOMETRY_MATERIALS and cat == hou.objNodeTypeCategory():
+        if GEOMETRY_MATERIALS != "off" and cat == hou.objNodeTypeCategory():
             self._scan_geometry_materials(node)
 
     def _scan_renderer_objects(self, rop):
@@ -328,7 +383,7 @@ class _Collector(object):
             if mode is None:
                 continue
             found_any = True
-            groups[mode].extend(_resolve(parm.evalAsString(), hou.node("/obj"), True))
+            groups[mode].extend(_resolve(_string_value(parm), hou.node("/obj"), True))
         if not found_any:
             # Unknown renderer with a camera: keep every displayed object to be safe.
             if rop.parm("camera") is None and rop.parm("RS_renderCamera") is None:
@@ -358,9 +413,21 @@ class _Collector(object):
             return
         if sop is None:
             return
+        if GEOMETRY_MATERIALS != "cook":
+            try:
+                dirty = sop.needsToCook()
+            except hou.Error:
+                dirty = True
+            if dirty:
+                # Sin cocinar no se puede saber: se conservan todos los materiales.
+                self.materials_unknown = True
+                return
         try:
             geo = sop.geometry()
+        except hou.OperationInterrupted:
+            raise
         except hou.Error:
+            self.materials_unknown = True
             return
         if geo is None:
             return
@@ -398,6 +465,8 @@ def _collect_deletions(collector):
             path = child.path()
             if path in collector.full:
                 continue
+            if collector.materials_unknown and _is_material_node(child):
+                continue
             if path in collector.folder:
                 walk(child)
             else:
@@ -431,11 +500,22 @@ def rop_clean(rops=None, dry_run=False, confirm=True):
         return []
 
     collector = _Collector()
-    with hou.InterruptableOperation("ROP Clean: analizando dependencias",
-                                    open_interrupt_dialog=True):
-        for rop in rops:
-            collector.keep(rop)
-        collector.run()
+    try:
+        with hou.InterruptableOperation("ROP Clean: analizando dependencias",
+                                        open_interrupt_dialog=True) as operation:
+            collector.operation = operation
+            for rop in rops:
+                collector.keep(rop)
+            collector.run()
+    except hou.OperationInterrupted:
+        msg = "ROP Clean: cancelado. No se ha borrado nada."
+        print(msg)
+        if ui and confirm:
+            hou.ui.displayMessage(msg, title="ROP Clean")
+        return []
+    collector.operation = None
+    if collector.materials_unknown:
+        print("ROP Clean: hay geometría sin cocinar; se conservan todos los materiales.")
     to_delete = _collect_deletions(collector)
     paths = [n.path() for n in to_delete]
 
@@ -453,8 +533,10 @@ def rop_clean(rops=None, dry_run=False, confirm=True):
 
     if ui and confirm and not dry_run:
         choice = hou.ui.displayMessage(
-            "Conservar solo lo que renderizan estos ROPs:\n%s\n\nSe borrarán %d nodos."
-            % (rop_names, len(paths)),
+            "Conservar solo lo que renderizan estos ROPs:\n%s\n\nSe borrarán %d nodos.%s"
+            % (rop_names, len(paths),
+               "\n\nHay geometría sin cocinar: se conservan todos los materiales."
+               if collector.materials_unknown else ""),
             buttons=("Limpiar", "Solo informe", "Cancelar"),
             default_choice=0, close_choice=2,
             details=preview, details_label="Nodos a borrar",
