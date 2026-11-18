@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="340" viewBox="0 0 640 340" fill="none">
+  <title>Focus en Houdini</title>
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#4b4c50"/></pattern>
+    <linearGradient id="obj" x1="420" y1="110" x2="520" y2="240" gradientUnits="userSpaceOnUse"><stop stop-color="#8a8b90"/><stop offset="1" stop-color="#55565b"/></linearGradient>
+  </defs>
+  <rect width="640" height="340" rx="12" fill="#292a2e"/>
+  <rect width="640" height="340" rx="12" fill="url(#grid)"/>
+  <rect x="96" y="140" width="92" height="60" rx="8" fill="#5a5b60" stroke="#1b1c20" stroke-width="2"/>
+  <path d="M188 152 L 222 136 L 222 204 L 188 188 Z" fill="#46474c" stroke="#1b1c20" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="122" cy="132" r="14" fill="#46474c" stroke="#1b1c20" stroke-width="2"/>
+  <circle cx="160" cy="132" r="14" fill="#46474c" stroke="#1b1c20" stroke-width="2"/>
+  <circle cx="470" cy="172" r="62" fill="url(#obj)"/>
+  <path d="M230 170 H 452" stroke="#f6ad42" stroke-width="2.5" stroke-dasharray="8 6"/>
+  <path d="M452 150 V 194" stroke="#f6ad42" stroke-width="3"/>
+  <path d="M440 158 h24 M440 186 h24" stroke="#f6ad42" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="452" cy="170" r="5" fill="#f6ad42"/>
+  <text x="340" y="160" text-anchor="middle" fill="#f6ad42" font-family="ui-monospace,Consolas,monospace" font-size="15">focus = 12.4</text>
+  <text x="320" y="300" text-anchor="middle" fill="#e4e4e7" font-family="ui-monospace,Consolas,monospace" font-size="18">focus</text>
+</svg>
