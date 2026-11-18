@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="340" viewBox="0 0 640 340" fill="none">
+  <title>Focus Ball en Houdini</title>
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#4b4c50"/></pattern>
+    <linearGradient id="mesh" x1="180" y1="90" x2="430" y2="260" gradientUnits="userSpaceOnUse"><stop stop-color="#8a8b90"/><stop offset="1" stop-color="#55565b"/></linearGradient>
+    <radialGradient id="ball" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(400 118) scale(26)"><stop stop-color="#e9ffc4"/><stop offset=".45" stop-color="#7dff1a"/><stop offset="1" stop-color="#2f9a00"/></radialGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(406 126) scale(52)"><stop stop-color="#66ff00" stop-opacity=".45"/><stop offset="1" stop-color="#66ff00" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="640" height="340" rx="12" fill="#292a2e"/>
+  <rect width="640" height="340" rx="12" fill="url(#grid)"/>
+  <path d="M170 230 C 210 120, 300 90, 406 126 C 470 150, 480 220, 440 250 C 360 290, 230 290, 170 230 Z" fill="url(#mesh)"/>
+  <path d="M170 230 C 210 120, 300 90, 406 126 C 470 150, 480 220, 440 250 C 360 290, 230 290, 170 230 Z M215 160 L 300 270 M300 108 L 340 280 M406 126 L 360 285 M455 170 L 230 270 M190 195 L 470 205" stroke="#3a3b40" stroke-width="1.5"/>
+  <circle cx="406" cy="126" r="52" fill="url(#glow)"/>
+  <circle cx="406" cy="126" r="20" fill="url(#ball)" stroke="#1b1c20" stroke-width="1.5"/>
+  <path d="M520 46 l12 34 8-12 14 14 6-6-14-14 12-8z" fill="#f1f1f3" stroke="#1b1c20" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M514 74 L 424 116" stroke="#7dff1a" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="320" y="318" text-anchor="middle" fill="#e4e4e7" font-family="ui-monospace,Consolas,monospace" font-size="18">focus_ball</text>
+</svg>
