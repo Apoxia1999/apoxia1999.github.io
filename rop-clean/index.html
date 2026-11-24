@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ROP Clean v1.2. Borra de la escena de Houdini todo lo que no usan los ROPs seleccionados." data-i18n-content="rcDescription">
+  <title>ROP Clean — Apoxia Toolkit</title>
+  <link rel="canonical" href="https://apoxia1999.github.io/rop-clean/">
+  <link rel="stylesheet" href="../assets/styles.css?v=i18n">
+  <script src="../assets/i18n.js?v=3.1" defer></script>
+  <script src="../assets/tool.js?v=3.1" defer></script>
+</head>
+<body>
+  <main class="tool-page">
+    <header class="page-header tool-header">
+      <a class="back" href="../">← Apoxia Toolkit</a>
+      <div class="language-switch" role="group" aria-label="Idioma" data-i18n-aria-label="language" hidden>
+        <button type="button" data-language="es" lang="es" aria-label="Español" aria-pressed="true">ES</button>
+        <button type="button" data-language="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+      </div>
+    </header>
+    <img class="tool-cover" src="../assets/rop-clean.svg" alt="Un ROP de Houdini conectado a los nodos que usa; los que no usa, tachados" data-i18n-alt="rcAlt" width="640" height="340">
+    <span class="version">v1.2 · Houdini 22</span>
+    <h1>ROP Clean</h1>
+    <p class="subtitle" data-i18n="rcSummary">Selecciona uno o varios ROPs y borra de la escena todo lo que no usan para renderizar: objetos, cámaras, luces, subnets, materiales y otros ROPs.</p>
+    <div class="actions">
+      <a class="button primary" href="../downloads/rop_clean.py" download data-i18n="rcDownload">Descargar script ↓</a>
+      <button class="button" id="copy-installer" data-installer="../downloads/rop_clean.py" data-prefix="&quot;&quot;&quot;" data-success-key="rcCopySuccess" data-error-key="rcCopyError" type="button" data-i18n="rcCopy" hidden>Copiar script</button>
+    </div>
+    <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+    <p class="note" data-i18n-html="rcIntegrity">Huella SHA-256 del script en <a href="../downloads/SHA256SUMS">SHA256SUMS</a>.</p>
+    <section class="install" aria-labelledby="uso-titulo">
+      <h2 id="uso-titulo" data-i18n="rcInstall">Instalación</h2>
+      <ol>
+        <li data-i18n-html="rcStep1">En un shelf, clic derecho → <strong>New Tool…</strong> y ponle de nombre <strong>ROP Clean</strong>.</li>
+        <li data-i18n-html="rcStep2">En la pestaña <strong>Script</strong>, con el lenguaje en Python, pega el script y pulsa <strong>Accept</strong>.</li>
+      </ol>
+      <h2 data-i18n="rcUsage">Uso</h2>
+      <ol>
+        <li data-i18n-html="rcUse1">Selecciona uno o varios ROPs, en <code>/out</code> o un <code>usdrender_rop</code> en <code>/stage</code>.</li>
+        <li data-i18n-html="rcUse2">Pulsa <strong>ROP Clean</strong> en el shelf.</li>
+        <li data-i18n-html="rcUse3">Revisa la lista de nodos a borrar y pulsa <strong>Limpiar</strong>. Con <strong>Solo informe</strong> la ves sin tocar nada.</li>
+      </ol>
+      <p class="note" data-i18n="rcKeeps">Conserva los objetos y luces que ve el render (candidatos visibles y forzados, menos los excluidos), solo la cámara de cada ROP, todo nodo al que apunte un parámetro o una expresión de lo conservado, y los materiales asignados en el objeto, en el Material SOP o por atributo.</p>
+      <p class="note" data-i18n="rcMaterials">No cocina nada, así que es rápido en escenas pesadas. Los materiales asignados por atributo se leen de la geometría ya cocinada; si algún objeto no lo está, se conservan todos los materiales. Pon <code>GEOMETRY_MATERIALS = "cook"</code> al inicio del script para cocinarla y limpiar también los materiales.</p>
+      <p class="note" data-i18n="rcInterrupt">Si el análisis tarda, <strong>Interrupt</strong> lo cancela sin borrar nada.</p>
+      <p class="note" data-i18n="rcFolders">Los subnets y matnets se quedan solo como contenedor: lo que no se usa dentro también se borra.</p>
+      <p class="note" data-i18n="rcSafety">Todo es un único paso de Undo. Si la escena tiene nombre, guarda antes una copia de seguridad numerada del .hip.</p>
+      <p class="note" data-i18n="rcProtected">Los nodos protegidos (dentro de assets bloqueados o sin permisos) se dejan como están y se listan al terminar.</p>
+      <p class="note" data-i18n="rcRenderers">Funciona con Mantra, Redshift, Arnold y Karma (Solaris). Con un motor que no reconoce, conserva todos los objetos visibles. Usa el valor de los parámetros en el take activo.</p>
+    </section>
+  </main>
+</body>
+</html>

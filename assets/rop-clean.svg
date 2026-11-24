@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="340" viewBox="0 0 640 340" fill="none">
+  <title>ROP Clean en Houdini</title>
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#4b4c50"/></pattern>
+    <linearGradient id="node" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#77787c"/><stop offset="1" stop-color="#515257"/></linearGradient>
+  </defs>
+  <rect width="640" height="340" rx="12" fill="#292a2e"/>
+  <rect width="640" height="340" rx="12" fill="url(#grid)"/>
+  <path d="M174 92 C 260 92, 260 170, 300 170 M174 170 H 300 M174 248 C 260 248, 260 170, 300 170" stroke="#777980" stroke-width="3"/>
+  <g opacity=".28">
+    <path d="M466 96 H 548 M466 244 H 548" stroke="#777980" stroke-width="3"/>
+    <rect x="548" y="78" width="60" height="36" rx="6" fill="url(#node)"/>
+    <rect x="548" y="226" width="60" height="36" rx="6" fill="url(#node)"/>
+    <rect x="406" y="78" width="60" height="36" rx="6" fill="url(#node)"/>
+    <rect x="406" y="226" width="60" height="36" rx="6" fill="url(#node)"/>
+  </g>
+  <path d="M414 86 l44 20 M458 86 l-44 20 M414 234 l44 20 M458 234 l-44 20 M556 86 l44 20 M600 86 l-44 20 M556 234 l44 20 M600 234 l-44 20" stroke="#e05d4f" stroke-width="3" stroke-linecap="round"/>
+  <rect x="98" y="74" width="76" height="36" rx="6" fill="url(#node)"/>
+  <rect x="98" y="152" width="76" height="36" rx="6" fill="url(#node)"/>
+  <rect x="98" y="230" width="76" height="36" rx="6" fill="url(#node)"/>
+  <text x="136" y="97" text-anchor="middle" fill="#e4e4e7" font-family="ui-monospace,Consolas,monospace" font-size="13">geo</text>
+  <text x="136" y="175" text-anchor="middle" fill="#e4e4e7" font-family="ui-monospace,Consolas,monospace" font-size="13">cam</text>
+  <text x="136" y="253" text-anchor="middle" fill="#e4e4e7" font-family="ui-monospace,Consolas,monospace" font-size="13">mat</text>
+  <rect x="298" y="140" width="96" height="60" rx="10" stroke="#f6ad42" stroke-width="3"/>
+  <rect x="304" y="146" width="84" height="48" rx="6" fill="#3d7da9"/>
+  <text x="346" y="176" text-anchor="middle" fill="#fff3db" font-family="ui-monospace,Consolas,monospace" font-size="15">ROP</text>
+  <text x="320" y="312" text-anchor="middle" fill="#e4e4e7" font-family="ui-monospace,Consolas,monospace" font-size="18">rop_clean</text>
+</svg>
