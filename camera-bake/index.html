@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Camera Bake v1.0. Hornea una cámara de Houdini con un keyframe en cada frame, en espacio mundo." data-i18n-content="cbDescription">
+  <title>Camera Bake — Apoxia Toolkit</title>
+  <link rel="canonical" href="https://apoxia1999.github.io/camera-bake/">
+  <link rel="stylesheet" href="../assets/styles.css?v=i18n">
+  <script src="../assets/i18n.js?v=2.9" defer></script>
+  <script src="../assets/tool.js?v=2.9" defer></script>
+</head>
+<body>
+  <main class="tool-page">
+    <header class="page-header tool-header">
+      <a class="back" href="../">← Apoxia Toolkit</a>
+      <div class="language-switch" role="group" aria-label="Idioma" data-i18n-aria-label="language" hidden>
+        <button type="button" data-language="es" lang="es" aria-label="Español" aria-pressed="true">ES</button>
+        <button type="button" data-language="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+      </div>
+    </header>
+    <img class="tool-cover" src="../assets/camera-bake.svg" alt="Cámara de Houdini con un keyframe en cada frame" data-i18n-alt="cbAlt" width="640" height="340">
+    <span class="version">v1.0 · Houdini 22</span>
+    <h1>Camera Bake</h1>
+    <p class="subtitle" data-i18n="cbSummary">Crea una copia de la cámara con un keyframe en cada frame, en espacio mundo y sin padres ni constraints. Lista para exportar a FBX, Alembic o USD.</p>
+    <div class="actions">
+      <a class="button primary" href="../downloads/camera_bake.py" download data-i18n="cbDownload">Descargar script ↓</a>
+      <button class="button" id="copy-installer" data-installer="../downloads/camera_bake.py" data-prefix="&quot;&quot;&quot;" data-success-key="cbCopySuccess" data-error-key="cbCopyError" type="button" data-i18n="cbCopy" hidden>Copiar script</button>
+    </div>
+    <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+    <p class="note" data-i18n-html="cbIntegrity">Huella SHA-256 del script en <a href="../downloads/SHA256SUMS">SHA256SUMS</a>.</p>
+    <section class="install" aria-labelledby="uso-titulo">
+      <h2 id="uso-titulo" data-i18n="cbInstall">Instalación</h2>
+      <ol>
+        <li data-i18n-html="cbStep1">En un shelf, clic derecho → <strong>New Tool…</strong> y ponle de nombre <strong>Camera Bake</strong>.</li>
+        <li data-i18n-html="cbStep2">En la pestaña <strong>Script</strong>, con el lenguaje en Python, pega el script y pulsa <strong>Accept</strong>.</li>
+      </ol>
+      <h2 data-i18n="cbUsage">Uso</h2>
+      <ol>
+        <li data-i18n-html="cbUse1">Selecciona una o varias cámaras, o mira a través de una en el viewport.</li>
+        <li data-i18n-html="cbUse2">Pulsa <strong>Camera Bake</strong> en el shelf y confirma el rango de frames (por defecto, el del playbar).</li>
+        <li data-i18n-html="cbUse3">Aparece <strong>&lt;cámara&gt;_baked</strong> en /obj. Si ya existe, te pregunta si reemplazarla. Exporta esa, no la original.</li>
+      </ol>
+      <p class="note" data-i18n="cbHow">Hornea la posición y rotación en espacio mundo, con todo lo que mueve la cámara: padres, constraints, Look At, Follow Path, CHOPs y expresiones. Copia todos los parámetros de la cámara, también los extra de render (Karma, Redshift…): los animados se hornean frame a frame y el resto queda como valor fijo, sin referencias a otros nodos. Corrige los saltos de 360° en la rotación.</p>
+      <p class="note" data-i18n-html="cbKeeps">La cámara original no se toca. Se deshace con un solo Undo y <strong>Esc</strong> cancela el horneado.</p>
+      <p class="note" data-i18n="cbLimit">Funciona con cámaras de OBJ. La escala de los padres no se copia: si la jerarquía tiene escala, el script avisa.</p>
+    </section>
+  </main>
+</body>
+</html>

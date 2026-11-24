@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AFX Frame Reader v1.0. Expresión de After Effects que muestra qué frames de la secuencia usa la capa de debajo." data-i18n-content="frDescription">
+  <title>AFX Frame Reader — Apoxia Toolkit</title>
+  <link rel="canonical" href="https://apoxia1999.github.io/frame-reader/">
+  <link rel="stylesheet" href="../assets/styles.css?v=i18n">
+  <script src="../assets/i18n.js?v=2.9" defer></script>
+  <script src="../assets/tool.js?v=2.9" defer></script>
+</head>
+<body>
+  <main class="tool-page">
+    <header class="page-header tool-header">
+      <a class="back" href="../">← Apoxia Toolkit</a>
+      <div class="language-switch" role="group" aria-label="Idioma" data-i18n-aria-label="language" hidden>
+        <button type="button" data-language="es" lang="es" aria-label="Español" aria-pressed="true">ES</button>
+        <button type="button" data-language="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+      </div>
+    </header>
+    <img class="tool-cover" src="../assets/frame-reader.svg" alt="Capa de texto de After Effects mostrando el rango de frames de la secuencia de debajo" data-i18n-alt="frAlt" width="640" height="340">
+    <span class="version">v1.0 · After Effects</span>
+    <h1>AFX Frame Reader</h1>
+    <p class="subtitle" data-i18n="frSummary">Una capa de texto que te dice qué frames de la secuencia de render se ven en la composición, y cuántos son.</p>
+    <div class="actions">
+      <a class="button primary" href="../downloads/afx_frame_reader.txt" download data-i18n="frDownload">Descargar expresión ↓</a>
+      <button class="button" id="copy-installer" data-installer="../downloads/afx_frame_reader.txt" data-prefix="var layerFound" data-success-key="frCopySuccess" data-error-key="frCopyError" type="button" data-i18n="frCopy" hidden>Copiar expresión</button>
+    </div>
+    <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+    <p class="note" data-i18n-html="frIntegrity">Huella SHA-256 de la expresión en <a href="../downloads/SHA256SUMS">SHA256SUMS</a>.</p>
+    <section class="install" aria-labelledby="uso-titulo">
+      <h2 id="uso-titulo" data-i18n="frUsage">Uso</h2>
+      <ol>
+        <li data-i18n-html="frStep1">Crea una capa de texto <strong>encima</strong> de la secuencia que quieres medir.</li>
+        <li data-i18n-html="frStep2">Despliega <strong>Text</strong>, haz <strong>Alt + clic</strong> en el cronómetro de <strong>Source Text</strong> y pega la expresión.</li>
+        <li data-i18n-html="frStep3">El texto muestra <strong>primer frame - último frame | total</strong> de la parte que se ve en la composición.</li>
+      </ol>
+      <p class="note" data-i18n="frHow">Lee la primera capa de metraje visible por debajo del texto en el frame actual, así que puedes moverte por el timeline y va cambiando de capa. Tiene en cuenta el recorte de la capa, el time stretch y el time remap.</p>
+      <p class="note" data-i18n-html="frNames">Saca el número del primer frame del nombre: <code>render_[1001-1100].exr</code> o <code>render_1001.exr</code>. Si el nombre no tiene números, empieza a contar desde 1.</p>
+      <p class="note" data-i18n="frLimit">Ignora capas de texto, formas, cámaras y luces, y las capas con opacidad 0. Si no encuentra ninguna, muestra «No visible footage layer».</p>
+    </section>
+  </main>
+</body>
+</html>

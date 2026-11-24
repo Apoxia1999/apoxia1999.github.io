@@ -1,0 +1,88 @@
+var layerFound = null;
+
+// Search downward for the first footage layer visible at the current time
+for (var i = index + 1; i <= thisComp.numLayers; i++) {
+    var candidate = thisComp.layer(i);
+
+    if (candidate.hasVideo && candidate.active) {
+        try {
+            var candidateSource = candidate.source;
+
+            // Ignore text, shape, camera, light, and other source-less layers
+            if (
+                candidateSource != null &&
+                candidateSource.frameDuration > 0 &&
+                candidate.transform.opacity.valueAtTime(time) > 0
+            ) {
+                layerFound = candidate;
+                break;
+            }
+        } catch (error) {
+            // Continue searching if this layer has no usable footage source
+        }
+    }
+}
+
+if (layerFound == null) {
+    "No visible footage layer";
+} else {
+    var source = layerFound.source;
+    var sourceName = source.name;
+
+    // Use frame 1 if the starting number cannot be found
+    var firstSequenceFrame = 1;
+
+    // After Effects sequence format:
+    // render_[0001-0100].exr
+    var sequenceRange = sourceName.match(
+        /\[(\d+)[^\d]+(\d+)\]/
+    );
+
+    if (sequenceRange) {
+        firstSequenceFrame = parseInt(sequenceRange[1], 10);
+    } else {
+        // Alternative formats:
+        // render_0001.exr
+        // render_0001
+        var allNumbers = sourceName.match(/\d+/g);
+
+        if (allNumbers && allNumbers.length > 0) {
+            firstSequenceFrame = parseInt(
+                allNumbers[allNumbers.length - 1],
+                10
+            );
+        }
+    }
+
+    var sourceFrameDuration = source.frameDuration;
+
+    // Get the source time used at the layer's visible beginning
+    var sourceStartTime = layerFound.sourceTime(
+        layerFound.inPoint
+    );
+
+    // Sample inside the final visible composition frame
+    var sourceEndTime = layerFound.sourceTime(
+        layerFound.outPoint - thisComp.frameDuration / 2
+    );
+
+    // Convert source times into actual sequence frame numbers
+    var firstUsedFrame =
+        firstSequenceFrame +
+        Math.floor(
+            sourceStartTime / sourceFrameDuration + 0.0001
+        );
+
+    var lastUsedFrame =
+        firstSequenceFrame +
+        Math.floor(
+            sourceEndTime / sourceFrameDuration + 0.0001
+        );
+
+    // Count both the first and last frames
+    var totalFrames =
+        Math.abs(lastUsedFrame - firstUsedFrame) + 1;
+
+    firstUsedFrame + " - " + lastUsedFrame +
+    "  |  " + totalFrames + " frames";
+}

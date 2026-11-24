@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="340" viewBox="0 0 640 340" fill="none">
+  <title>Frame Reader en After Effects</title>
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#4b4c50"/></pattern>
+  </defs>
+  <rect width="640" height="340" rx="12" fill="#292a2e"/>
+  <rect width="640" height="340" rx="12" fill="url(#grid)"/>
+  <rect x="180" y="92" width="280" height="38" rx="8" fill="#1b1c20" stroke="#f6ad42" stroke-width="2"/>
+  <text x="320" y="117" text-anchor="middle" fill="#f6ad42" font-family="ui-monospace,Consolas,monospace" font-size="15">1001 - 1100  |  100 frames</text>
+  <rect x="120" y="146" width="400" height="26" rx="5" fill="#3a3b40" stroke="#1b1c20" stroke-width="2"/>
+  <text x="132" y="164" fill="#e4e4e7" font-family="ui-monospace,Consolas,monospace" font-size="12">T  frame reader</text>
+  <rect x="120" y="180" width="400" height="26" rx="5" fill="#3a3b40" stroke="#1b1c20" stroke-width="2"/>
+  <rect x="220" y="184" width="240" height="18" rx="3" fill="#5a5b60"/>
+  <text x="132" y="198" fill="#e4e4e7" font-family="ui-monospace,Consolas,monospace" font-size="12">render_[1001-1100].exr</text>
+  <rect x="120" y="214" width="400" height="26" rx="5" fill="#33343a" stroke="#1b1c20" stroke-width="2"/>
+  <rect x="160" y="218" width="340" height="18" rx="3" fill="#46474c"/>
+  <text x="132" y="232" fill="#a1a1aa" font-family="ui-monospace,Consolas,monospace" font-size="12">plate.mov</text>
+  <path d="M220 138 V 246 M460 138 V 246" stroke="#f6ad42" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="320" y="300" text-anchor="middle" fill="#e4e4e7" font-family="ui-monospace,Consolas,monospace" font-size="18">frame reader</text>
+</svg>

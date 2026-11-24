@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="340" viewBox="0 0 640 340" fill="none">
+  <title>Camera Bake en Houdini</title>
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#4b4c50"/></pattern>
+  </defs>
+  <rect width="640" height="340" rx="12" fill="#292a2e"/>
+  <rect width="640" height="340" rx="12" fill="url(#grid)"/>
+  <path d="M90 200 C 200 90, 330 230, 440 120 S 500 120, 525 112" stroke="#6e6f75" stroke-width="2.5" stroke-dasharray="7 6"/>
+  <g fill="#f6ad42">
+    <path d="M90 192 l8 8 -8 8 -8 -8z"/><path d="M135 151 l8 8 -8 8 -8 -8z"/><path d="M180 133 l8 8 -8 8 -8 -8z"/>
+    <path d="M225 137 l8 8 -8 8 -8 -8z"/><path d="M270 152 l8 8 -8 8 -8 -8z"/><path d="M315 164 l8 8 -8 8 -8 -8z"/>
+    <path d="M360 160 l8 8 -8 8 -8 -8z"/><path d="M405 140 l8 8 -8 8 -8 -8z"/><path d="M450 112 l8 8 -8 8 -8 -8z"/>
+    <path d="M495 109 l8 8 -8 8 -8 -8z"/>  </g>
+  <g transform="translate(530 92)">
+    <rect width="62" height="40" rx="6" fill="#5a5b60" stroke="#1b1c20" stroke-width="2"/>
+    <path d="M62 8 L 84 0 L 84 40 L 62 32 Z" fill="#46474c" stroke="#1b1c20" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <path d="M90 250 H 500" stroke="#4b4c50" stroke-width="2"/>
+  <g stroke="#f6ad42" stroke-width="2"><path d="M90 244v12M135 244v12M180 244v12M225 244v12M270 244v12M315 244v12M360 244v12M405 244v12M450 244v12M495 244v12"/></g>
+  <text x="320" y="300" text-anchor="middle" fill="#e4e4e7" font-family="ui-monospace,Consolas,monospace" font-size="18">camera bake</text>
+</svg>
